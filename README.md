@@ -26,9 +26,10 @@
 - Endless possibilities for customization
 
 
-## Flow Example:
+## Simple FlowBuilder Example:
 
-`@MainActor class ExampleFlow: FlowBuilder {
+```
+@MainActor class ExampleFlow: FlowBuilder {
     func presentExample1() async {
         await presentPopup(Example1View(showDismiss: true, flow: self))
     }
@@ -40,9 +41,10 @@
     func presentExample3() async {
         await presentPopup(Example3View(showDismiss: true, flow: self))
     }
-}`
+}
+```
 
-## Usage Example::
+## Usage Example:
 
 ```
 Task {
@@ -52,6 +54,35 @@ Task {
     await flow.presentExample3() // another popup
 }
 ```
+
+## More Avdanced FlowBuilder Example:
+```
+import SwiftUIFlows
+
+@MainActor class RootFlow: FlowBuilder {
+    
+    func showVerified(viewModel: AuthVM) async {
+        await presentFullScreen(
+            VerifiedView(viewModel: viewModel, completion: { [weak self] in
+                self?.dismissFullScreen()
+            })
+        )
+    }
+    
+    func showAnythingYouWant(view: AnyView) async {
+        await presentFullScreen(
+            view
+                .onAppear {
+                    Task {
+                        try? await Task.sleep(for: .seconds(2))
+                        self.dismissFullScreen()
+                    }
+                }
+        )
+    }
+}
+```
+
 
 ### TODO:
 
