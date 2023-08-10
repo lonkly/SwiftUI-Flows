@@ -12,9 +12,7 @@
 - Do it declaratively, no need to introduce tedious flags `@State private var isPresentingMyScreen = false` anymore.
 - Yes, finally you can show up to 9 modals in the view and present/dismiss them at any time!
 - Writing Flows is so simple they will actually take considerably less time to implement at scale because you don't need to write callbacks and dismissals yourself.
-- Provides handy methods to do actions
 - Customizable popups
-- No analogs, seriously, check it out :)
 
 
 ## Features:
