@@ -1,24 +1,24 @@
 # SwiftUI Flows
 
 ### A cross-Apple-platform library enabling the native SwiftUI for presenting multiple:
-- Full-screens,
-- Sheet-styled modals, 
-- custom-size models,
-- Popovers *at the same time*.
+- Full-screens
+- Sheet-styled modals
+- Сustom-sized models
+- Popovers
 
 
 ## Why SwiftUIFlows?
 - Extract navigation from the Views
-- Do it declaratively, no need to introduce tedious flags `@State private var isPresentingMyScreen = false` anymore.
-- Yes, finally you can show up to 9 modals in the view and present/dismiss them at any time!
-- Writing Flows is so simple they will actually take considerably less time to implement at scale because you don't need to write callbacks and dismissals yourself.
+- Do it declaratively, no need to introduce tedious flags `@State private var isPresentingMyScreen = false` anymore
+- Yes, finally you can show up to 9 modals in the view and present/dismiss them at any time
+- Writing Flows is so simple they will actually take considerably less time to implement at scale because you don't need to write callbacks and dismissals yourself
 - Customizable popups
 
 
 ## Features:
 - Structured concurrency
 - Lightweight, no dependencies, made with KISS in mind
-- Works on Mac/iOS.
+- Works on Mac/iOS
 - Native Fullscreen based on ZStack (much better than out-of-the-box ones)
 - Native Popups based on ZStack
 - Endless possibilities for customization
