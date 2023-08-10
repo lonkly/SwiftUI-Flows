@@ -1,5 +1,6 @@
 //
 //  SheetFlow.swift
+//  Copyright [2023] [Vivienne Fosh]
 //
 //  Created by Vivienne Fosh on 09.06.2023.
 //

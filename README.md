@@ -19,3 +19,6 @@ TODO:
 
 - Turn on/off animations
 - Test thoroughly 
+- More customization options for popups
+- More animation options
+- Add NavigationStack-based flows

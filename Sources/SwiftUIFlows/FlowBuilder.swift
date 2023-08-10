@@ -1,5 +1,6 @@
 //
 //  FlowBuilder.swift
+//  Copyright [2023] [Vivienne Fosh]
 //
 //  Created by Vivienne Fosh on 05.06.2023.
 //
@@ -10,9 +11,10 @@ import SwiftUI
 /// This is an Observable class that is open because you will inherit your router from it and might want additional customization
 /// FlowBuilder stores all possible states that a single screen of yours can produce.
 ///
-/// It currently provides a
+/// It stores all possible bindings and ithe logic here is that if at least one of 9 views exists - show it.
+///
 @MainActor open class FlowBuilder: ObservableObject {
-    struct State {
+    public struct State {
         var presentingSheet1: AnyView? = nil
         var presentingSheet2: AnyView? = nil
         var presentingSheet3: AnyView? = nil
@@ -51,88 +53,7 @@ import SwiftUI
     public init(isPresented: Binding<Bool>) {
         state = State(isPresented: isPresented)
     }
-    
-    /// Dismisses top-level popup from your View.
-    @MainActor
-    public func dismissPopup() {
-        if state.presentingPopup9 != nil {
-            state.presentingPopup9 = nil
-        } else if state.presentingPopup8 != nil {
-            state.presentingPopup8 = nil
-        } else if state.presentingPopup7 != nil {
-            state.presentingPopup7 = nil
-        } else if state.presentingPopup6 != nil {
-            state.presentingPopup6 = nil
-        } else if state.presentingPopup5 != nil {
-            state.presentingPopup5 = nil
-        } else if state.presentingPopup4 != nil {
-            state.presentingPopup4 = nil
-        } else if state.presentingPopup3 != nil {
-            state.presentingPopup3 = nil
-        } else if state.presentingPopup2 != nil {
-            state.presentingPopup2 = nil
-        } else if state.presentingPopup1 != nil {
-            state.presentingPopup1 = nil
-        } else {
-            state.isPresented.wrappedValue = false
-        }
-    }
-    
-    /// Dismisses top-level modal full-screen from your View.
-    @MainActor
-    public func dismissFullScreen() {
-        if state.presentingFullScreen9 != nil {
-            state.presentingFullScreen9 = nil
-        } else if state.presentingFullScreen8 != nil {
-            state.presentingFullScreen8 = nil
-        } else if state.presentingFullScreen7 != nil {
-            state.presentingFullScreen7 = nil
-        } else if state.presentingFullScreen6 != nil {
-            state.presentingFullScreen6 = nil
-        } else if state.presentingFullScreen5 != nil {
-            state.presentingFullScreen5 = nil
-        } else if state.presentingFullScreen4 != nil {
-            state.presentingFullScreen4 = nil
-        } else if state.presentingFullScreen3 != nil {
-            state.presentingFullScreen3 = nil
-        } else if state.presentingFullScreen2 != nil {
-            state.presentingFullScreen2 = nil
-        } else if state.presentingFullScreen1 != nil {
-            state.presentingFullScreen1 = nil
-        } else {
-            state.isPresented.wrappedValue = false
-        }
-    }
-    
-    /// Dismisses top-level modal sheet from your View.
-    @MainActor
-    func dismissSheet() {
-        if state.presentingSheet9 != nil {
-            state.presentingSheet9 = nil
-        } else if state.presentingSheet8 != nil {
-            state.presentingSheet8 = nil
-        } else if state.presentingSheet7 != nil {
-            state.presentingSheet7 = nil
-        } else if state.presentingSheet6 != nil {
-            state.presentingSheet6 = nil
-        } else if state.presentingSheet5 != nil {
-            state.presentingSheet5 = nil
-        } else if state.presentingSheet4 != nil {
-            state.presentingSheet4 = nil
-        } else if state.presentingSheet3 != nil {
-            state.presentingSheet3 = nil
-        } else if state.presentingSheet2 != nil {
-            state.presentingSheet2 = nil
-        } else if state.presentingSheet1 != nil {
-            state.presentingSheet1 = nil
-        } else {
-            state.isPresented.wrappedValue = false
-        }
-    }
 }
-
-
-
 
 private extension FlowBuilder {
     var isPresentingSheet1: Binding<Bool> { boolBinding(keyPath: \.presentingSheet1) }
@@ -165,10 +86,11 @@ private extension FlowBuilder {
     var isPresentingPopup8: Binding<Bool> { boolBinding(keyPath: \.presentingPopup8) }
     var isPresentingPopup9: Binding<Bool> { boolBinding(keyPath: \.presentingPopup9) }
     
-    var isPresented: Binding<Bool> { state.isPresented } // this comes from the Host view and is constant at Root
+    /// this isPresented comes from the Host view and is .constant(true) at Parent Vie/
+    var isPresented: Binding<Bool> { state.isPresented }
 }
 
-private extension FlowBuilder {
+public extension FlowBuilder {
     func binding<T>(keyPath: WritableKeyPath<State, T>) -> Binding<T> {
         Binding(
             get: { self.state[keyPath: keyPath] },
@@ -189,51 +111,5 @@ private extension FlowBuilder {
                 }
             }
         )
-    }
-}
-
-public extension View {
-    @MainActor
-    func sheetFlow(_ builder: FlowBuilder) -> some View {
-        modifier(SheetFlow(
-            presentingView1: builder.binding(keyPath: \.presentingSheet1),
-            presentingView2: builder.binding(keyPath: \.presentingSheet2),
-            presentingView3: builder.binding(keyPath: \.presentingSheet3),
-            presentingView4: builder.binding(keyPath: \.presentingSheet4),
-            presentingView5: builder.binding(keyPath: \.presentingSheet5),
-            presentingView6: builder.binding(keyPath: \.presentingSheet6),
-            presentingView7: builder.binding(keyPath: \.presentingSheet7),
-            presentingView8: builder.binding(keyPath: \.presentingSheet8),
-            presentingView9: builder.binding(keyPath: \.presentingSheet9)
-        ))
-    }
-    
-    @MainActor
-    func fullScreenFlow(_ builder: FlowBuilder) -> some View {
-        modifier(FullScreenFlow(
-            presentingView1: builder.binding(keyPath: \.presentingFullScreen1),
-            presentingView2: builder.binding(keyPath: \.presentingFullScreen2),
-            presentingView3: builder.binding(keyPath: \.presentingFullScreen3),
-            presentingView4: builder.binding(keyPath: \.presentingFullScreen4),
-            presentingView5: builder.binding(keyPath: \.presentingFullScreen5),
-            presentingView6: builder.binding(keyPath: \.presentingFullScreen6),
-            presentingView7: builder.binding(keyPath: \.presentingFullScreen7),
-            presentingView8: builder.binding(keyPath: \.presentingFullScreen8),
-            presentingView9: builder.binding(keyPath: \.presentingFullScreen9)
-        ))
-    }
-    
-    @MainActor /// One Popover flow is only bound to one config for the sake of saving implementation time
-    func popupFlow(_ builder: FlowBuilder, config: PopoverConfig) -> some View {
-        modifier(PopoverFlow(config: config,
-                             presentingView1: builder.binding(keyPath: \.presentingPopup1),
-                             presentingView2: builder.binding(keyPath: \.presentingPopup2),
-                             presentingView3: builder.binding(keyPath: \.presentingPopup3),
-                             presentingView4: builder.binding(keyPath: \.presentingPopup4),
-                             presentingView5: builder.binding(keyPath: \.presentingPopup5),
-                             presentingView6: builder.binding(keyPath: \.presentingPopup6),
-                             presentingView7: builder.binding(keyPath: \.presentingPopup7),
-                             presentingView8: builder.binding(keyPath: \.presentingPopup8),
-                             presentingView9: builder.binding(keyPath: \.presentingPopup9)))
     }
 }

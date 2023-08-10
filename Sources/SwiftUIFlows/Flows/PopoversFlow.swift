@@ -1,5 +1,6 @@
 //
 //  PopoverFlow.swift
+//  Copyright [2023] [Vivienne Fosh]
 //
 //  Created by Vivienne Fosh on 26.06.2023.
 //

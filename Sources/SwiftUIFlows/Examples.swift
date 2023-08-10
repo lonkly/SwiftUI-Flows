@@ -1,5 +1,6 @@
 //
-//  SheetFlow.swift
+//  SwiftUIFlows.swift
+//  Copyright [2023] [Vivienne Fosh]
 //
 //  Created by Vivienne Fosh on 09.06.2023.
 //
@@ -124,7 +125,7 @@ struct ExampleView: View {
         .sheetFlow(flow)
         .onAppear {
             Task {
-                try? await Task.sleep(nanoseconds: 3_000_000_000)
+                try? await Task.sleep(nanoseconds: 2_000_000_000)
                 await flow.presentExample1()
                 await flow.presentExample2()
                 await flow.presentExample3()

@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  View+RoundedCorners.swift
+//  Copyright [2023] [Vivienne Fosh]
 //
 //  Created by Vivienne Fosh on 09.08.2023.
 //

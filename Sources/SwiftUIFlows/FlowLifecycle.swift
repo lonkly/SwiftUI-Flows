@@ -1,5 +1,6 @@
 //
 //  FlowLifecycle.swift
+//  Copyright [2023] [Vivienne Fosh]
 //
 //  Created by Vivienne Fosh on 09.08.2023.
 //
@@ -30,8 +31,6 @@ private struct DisappearKey: EnvironmentKey {
 
 /// These methods will fire on Every onAppear / onDisappear of Every full-screen/ popup / sheet that participates in the flow.
 /// I strongly recommend that for general use-cases you still write separate onAppear/onDisappear logic.
-///
-///
 extension EnvironmentValues {
     var fullScreensOnAppear: () -> Void {
         get { self[AppearKey.self] }
