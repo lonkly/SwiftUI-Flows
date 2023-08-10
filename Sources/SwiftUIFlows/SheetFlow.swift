@@ -1,6 +1,5 @@
 //
 //  SheetFlow.swift
-//  StakesV3
 //
 //  Created by Vivienne Fosh on 09.06.2023.
 //

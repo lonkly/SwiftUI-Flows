@@ -1,12 +1,11 @@
+//
+//  SheetFlow.swift
+//
+//  Created by Vivienne Fosh on 09.06.2023.
+//
+
 import Foundation
 import SwiftUI
-
-public struct SwiftUIFlows {
-    public private(set) var text = "Hello, World!"
-
-    public init() {
-    }
-}
 
 struct Example1View: View {
     var showDismiss = false

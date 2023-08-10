@@ -28,8 +28,8 @@ struct FullScreenFlow: ViewModifier {
     @State private var tabBar: UITabBar?
     #endif
     
-    @Environment(\.flowOnAppear) var onAppear
-    @Environment(\.flowOnDisappear) var onDisappear
+    @Environment(\.fullScreensOnAppear) var onAppear
+    @Environment(\.fullScreensOnDisappear) var onDisappear
 
     func body(content: Content) -> some View {
         ZStack {
