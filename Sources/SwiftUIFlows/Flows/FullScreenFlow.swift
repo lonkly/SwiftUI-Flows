@@ -41,6 +41,7 @@ struct FullScreenFlow: ViewModifier {
                     .toolbar(.hidden)
                     .onAppear { onAppear() }
                     .onDisappear { onDisappear() }
+                    .transition(.move(edge: .bottom))
             } else {
                 overlay
 #if os(iOS)
@@ -57,6 +58,7 @@ struct FullScreenFlow: ViewModifier {
 #endif
                         onDisappear()
                     }
+                    .transition(.move(edge: .bottom))
             }
             
         }

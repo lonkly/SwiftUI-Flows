@@ -10,11 +10,11 @@ import SwiftUI
 
 /// Closures won't really work, because there is no way to efficiently update them alongside the View, therefore OnAppear and OnDisappear are provided
 extension View {
-    func flowOnAppear(_ block: @escaping () -> Void) -> some View {
+    func fullscreenOnAppear(_ block: @escaping () -> Void) -> some View {
         environment(\.fullScreensOnAppear, block)
     }
     
-    func flowOnDisappear(_ block: @escaping () -> Void) -> some View {
+    func fullscreenOnDisappear(_ block: @escaping () -> Void) -> some View {
         environment(\.fullScreensOnDisappear, block)
     }
 }

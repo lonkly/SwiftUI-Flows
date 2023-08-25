@@ -5,24 +5,14 @@
 //  Created by Vivienne Fosh on 26.06.2023.
 //
 
-import Foundation
 import SwiftUI
 
-public struct PopoverConfig {
-    var width: CGFloat
-    var height: CGFloat
-    var offsetTop: CGFloat = 1
-    var transition: AnyTransition = .move(edge: .bottom)
-    var backgroundColor: Color = Color.white
-    var shadowColor: Color = Color.gray
-    var dismissOnTapOutside: (() -> Void)?
-    var dismissBySwipeDown: (() -> Void)?
-}
-
 struct PopoverFlow: ViewModifier {
-    @State private var offset = CGFloat.zero
     
     let config: PopoverConfig
+    
+    @State private var animationValue = false
+    @State private var dragOffset = CGFloat.zero
     
     @Binding var presentingView1: AnyView?
     @Binding var presentingView2: AnyView?
@@ -33,9 +23,6 @@ struct PopoverFlow: ViewModifier {
     @Binding var presentingView7: AnyView?
     @Binding var presentingView8: AnyView?
     @Binding var presentingView9: AnyView?
-    
-    @Environment(\.popupsOnAppear) var onAppear
-    @Environment(\.popupsOnDisappear) var onDisappear
     
     func body(content: Content) -> some View {
         ZStack(alignment: .bottom) {
@@ -49,45 +36,62 @@ struct PopoverFlow: ViewModifier {
         let part1 = presentingView9 ?? presentingView8 ?? presentingView7 ?? presentingView6 ?? presentingView5
         let part2 = presentingView4 ?? presentingView3 ?? presentingView2 ?? presentingView1
         if let presentingView = part1 ?? part2 { // haha, swift compiler, deal with it
-            Color.black.opacity(0.3)
-                .ignoresSafeArea()
-                .zIndex(1)
-                .onTapGesture {
-                    config.dismissOnTapOutside?()
-                }
-            
-            presentingView
-                .frame(width: config.width, height: config.height)
-                .clipShape(
-                    Rectangle()
-                )
-                .padding(.top, config.offsetTop)
-                .background(
-                    ZStack {
-                        //                        config.shadowColor
-                        //                            .cornerRadius(12, corners: [.topLeft, .topRight])
-                        config.backgroundColor
-                            .roundedCorners(radius: 12, corners: [.topLeft, .topRight])
-                            .padding(.top, 1)
-                    }.shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: -1)
-                        .edgesIgnoringSafeArea(.bottom)
-                ).zIndex(6669) // always on top
-                .transition(config.transition)
-                .gesture(
-                    DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                        .onChanged { value in
-                            if config.dismissBySwipeDown != nil {
-                                offset += value.translation.height
-                            }
+            ZStack(alignment: config.alignment) {
+                config.backgroundColor
+                    .ignoresSafeArea()
+                    .zIndex(1)
+                    .onTapGesture {
+                        withAnimation {
+                            animationValue = false
                         }
-                        .onEnded { _ in
-                            withAnimation {
-                                config.dismissBySwipeDown?()
+                        config.dismissOnTapOutside?()
+                    }
+                
+                presentingView
+                    .frame(width: config.width, height: config.height)
+                    .shadow(color: config.shadowColor,
+                                    radius: config.shadowRadius,
+                                    x: config.shadowOffX,
+                                    y: config.shadowOffY)
+                    
+                    .roundedCorners(radius: config.cornerRadius, corners: config.corners)
+                    .zIndex(6669) // always on top
+                    .scaleEffect(animationValue ? 1 : 0)
+                    .animation(config.animation, value: animationValue)
+                    .transition(config.transition)
+                    .gesture(
+                        DragGesture(minimumDistance: 10 , coordinateSpace: .local)
+                            .onChanged { value in
+                                if config.dismissBySwipeDown != nil {
+                                    dragOffset += value.translation.height
+                                }
                             }
+                            .onEnded { val in
+                                guard val.translation.height > 30 else {
+                                    return
+                                }
+                                withAnimation {
+                                    withAnimation {
+                                        animationValue = false
+                                    }
+                                    config.dismissBySwipeDown?()
+                                }
+                            }
+                    )
+                    .onAppear {
+                        withAnimation {
+                            animationValue = true
                         }
-                )
-                .onAppear { onAppear() }
-                .onDisappear { onDisappear() }
+                    }
+                    .onDisappear {
+                        withAnimation {
+                            animationValue = false
+                            dragOffset = .zero
+                        }
+                    }
+                    .offset(x: config.offsetX, y: config.offsetY + dragOffset)
+                    .simultaneousGesture(TapGesture(count: 1).onEnded { config.onTapPopover?() } )
+            }
         }
     }
 }

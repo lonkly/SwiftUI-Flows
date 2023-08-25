@@ -10,9 +10,8 @@ import Foundation
 /// These functions can be called on the flow stateobject to dismiss respective modals. 
 public extension FlowBuilder {
     
-    
     /// Dismisses top-level popup from your View.
-    /// 
+    ///
     @MainActor
     func dismissPopup() {
         if state.presentingPopup9 != nil {
