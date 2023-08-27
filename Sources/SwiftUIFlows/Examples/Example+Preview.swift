@@ -15,46 +15,56 @@ struct ContentView: View {
     @StateObject var anotherFlow = ExampleFlow(isPresented: .constant(true))
     
     func presentAll() async {
-            
-            await flow.presentExample1()
-            await flow.presentExample2()
-            await anotherFlow.presentExample3()
+        
+        await flow.presentExample1()
+        await flow.presentExample2()
+        await anotherFlow.presentExample3()
     }
-
+    
     var body: some View {
         
         VStack {
             
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Root View").font(.largeTitle).bold()
-                    Text("that shows other after delay").font(.title3).bold()
-                }.padding()
+                    Text("Root View")
+                        .font(.largeTitle)
+                    Text("shows fullscreen and 2 popups after delay. tap the button to invoke manually")
+                        .font(.title3)
+                }
+                .padding()
+                .foregroundStyle(.black)
+                
                 Spacer()
             }
+            
             Spacer()
+            
             Button(action: {
                 Task {
                     await presentAll()
                 }
             }) {
                 Text("Show Everything")
+                    .font(.title3)
+                    .tint(.black)
+                    .foregroundColor(.black)
             }
             .buttonStyle(.borderedProminent)
-            .tint(.black)
+            .foregroundStyle(.black)
             
             
             Spacer()
         }
         
         .onAppear {
-            Task {
-                try? await Task.sleep(nanoseconds: 2_000_000_000)
-                await presentAll()
-            }
+//            Task {
+//                try? await Task.sleep(nanoseconds: 3_000_000_000)
+//                await presentAll()
+//            }
         }
         
-        // This line is required for flow to present full-screen views
+        // This line is required for flow to present native iOS sheets
         .sheetFlow(flow)
         // This line is required for flow to present full-screen views
         .fullScreenFlow(flow)
@@ -71,7 +81,7 @@ struct ContentView: View {
             verticalAlignment: .center
         ))
         .popupFlow(anotherFlow, config: PopoverConfig(
-            width: 120,
+            width: 180,
             height: 200,
             dismissOnTapOutside: {
                 anotherFlow.dismissPopup()
@@ -91,15 +101,25 @@ struct ContentView: View {
 
 @MainActor open class ExampleFlow: FlowBuilder {
     func presentExample1() async {
-        await presentPopup(PopupExampleView(showDismissButton: true).environmentObject(self))
+        await presentPopup(
+            PopupExampleView(showDismissButton: true)
+                .environmentObject(self)
+        )
     }
-
+    
+    /// only thing special about these methods is how you actually want to present you view - via popup, fullscreen or a modal sheet.
     func presentExample2() async {
-        await presentFullScreen(FullscreenExampleView(showDismissButton: true).environmentObject(self))
+        await presentFullScreen(
+            FullscreenExampleView(showDismissButton: true)
+                .environmentObject(self)
+        )
     }
-
+    
     func presentExample3() async {
-        await presentPopup(PopupExample2View(showDismissButton: true).environmentObject(self))
+        await presentPopup(
+            PopupExample2View(showDismissButton: true)
+                .environmentObject(self)
+        )
     }
 }
 

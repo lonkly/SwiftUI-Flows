@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Vivienne Fosh on 24.08.2023.
 //
@@ -16,13 +16,15 @@ struct PopupExampleView: View {
     var body: some View {
         VStack {
             Spacer()
-            HStack { Spacer() }
-            Button {} label: {
-                Text("Popup 1").bold()
-            }
-            .padding()
+            //HStack { Spacer() }
             
-            Text("Drag a bit to move, or a lot to dismiss, or").bold()
+            Text("Popup 1")
+                .font(.title)
+                .padding()
+            
+            Text("Drag a bit to move, or a lot to dismiss, or")
+                .padding(.horizontal)
+                .multilineTextAlignment(.center)
             
             if showDismissButton {
                 HStack {
@@ -31,23 +33,24 @@ struct PopupExampleView: View {
                         flow.dismissPopup()
                     } label: {
                         Text("Dismiss")
+                            .tint(.black)
+                            .foregroundColor(.black)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.primary)
+                    .foregroundStyle(Color.primary)
                     Spacer()
                 }
             }
-           
+            
             Spacer()
         }
         .onAppear {
-            print("Example1 Appeared")
+            print("PopupExample1 appeared")
         }
         .onDisappear {
-            print("Example1 Disappear")
+            print("PopupExample1 disappeared")
         }
-        .tint(Color.primary)
-        .background(Color(red: 51/255, green: 124/255, blue: 207/255))
+        .background(.red)
     }
 }
 
@@ -60,34 +63,41 @@ struct PopupExample2View: View {
     var body: some View {
         VStack {
             HStack { Spacer() }
+            
             Spacer()
+            
+            Text("Popup 2")
+                .font(.title)
+                .padding()
+            
             if showDismissButton {
                 HStack {
                     Spacer()
+                    
                     Button {
                         withAnimation {
                             flow.dismissPopup()
                         }
                     } label: {
                         Text("Dismiss")
+                            .tint(.black)
+                            .foregroundColor(Color.black)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(Color.primary)
+                    .padding()
+                    
                     Spacer()
                 }
             }
-            Button {} label: {
-                Text("Popup 2").bold()
-            }
+            
             Spacer()
         }
         .onAppear {
-            print("Example3 Appeared")
+            print("PopupExample2 appeared")
         }
         .onDisappear {
-            print("Example3 Disappear")
+            print("PopupExample2 disappeared")
         }
-        .tint(Color.primary)
         .background(Color(red: 20/255, green: 80/255, blue: 163/255))
     }
 }

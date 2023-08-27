@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Vivienne Fosh on 24.08.2023.
 //
@@ -10,7 +10,7 @@ import SwiftUI
 struct FullscreenExampleView: View {
     var showDismissButton = true
     @EnvironmentObject var flow: ExampleFlow
-
+    
     var body: some View {
         VStack {
             if showDismissButton {
@@ -20,7 +20,7 @@ struct FullscreenExampleView: View {
                         flow.dismissFullScreen()
                     } label: {
                         Text("Dismiss")
-                            .bold()
+                            .foregroundColor(Color.black)
                     }
                     .buttonStyle(.borderedProminent)
                     .padding()
@@ -28,19 +28,20 @@ struct FullscreenExampleView: View {
             }
             Spacer()
             
-            Button {} label: {
-                Text("FullScreen View")
-                    .bold()
-            }
+            
+            Text("FullScreen View")
+                .font(.largeTitle)
+                .foregroundColor(Color.black)
+            
             Spacer()
         }
         .onAppear {
-            print("Example2 Appeared")
+            print("FullScreen appeared")
         }
         .onDisappear {
-            print("Example2 Disappear")
+            print("FullScreen disappeared")
         }
-        .tint(Color.primary)
+        .foregroundStyle(Color.primary)
         .background(.yellow)
     }
 }
