@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Vivienne Fosh on 24.08.2023.
 //
@@ -11,31 +11,74 @@ public struct PopoverConfig {
     var width: CGFloat
     var height: CGFloat
     
-    var transition: AnyTransition = .move(edge: .bottom)
-    var backgroundColor: Color = Color.black.opacity(0.5)
+    var transition: AnyTransition
+    var backgroundColor: Color
     
     var dismissOnTapOutside: (() -> Void)?
     var dismissBySwipeDown: (() -> Void)?
     
-    var corners: RectCorner = [.topLeft, .topRight, .bottomLeft, .bottomRight]
-    var cornerRadius: CGFloat = 12
+    var corners: RectCorner
+    var cornerRadius: CGFloat
     
-    var shadowColor: Color = .black.opacity(0.12)
-    var shadowRadius: CGFloat = 8
-    var shadowOffX: CGFloat = 0
-    var shadowOffY: CGFloat = -1
+    var shadowColor: Color
+    var shadowRadius: CGFloat
+    var shadowOffX: CGFloat
+    var shadowOffY: CGFloat
     
-    var animation: Animation = .default
+    var animation: Animation
     
-    var horizontalAlignment: HorizontalAlignment = .center
-    var verticalAlignment: VerticalAlignment = .bottom
+    var horizontalAlignment: HorizontalAlignment
+    var verticalAlignment: VerticalAlignment
     
     var alignment: Alignment {
         Alignment(horizontal: horizontalAlignment, vertical: verticalAlignment)
     }
     
-    var offsetX: CGFloat = 0
-    var offsetY: CGFloat = 0
+    var offsetX: CGFloat
+    var offsetY: CGFloat
     
     var onTapPopover: (() -> Void)?
+    
+    public init(width: CGFloat,
+                height: CGFloat,
+                transition: AnyTransition = .move(edge: .bottom),
+                backgroundColor: Color = .black.opacity(0.5),
+                dismissOnTapOutside: (() -> Void)? = nil,
+                dismissBySwipeDown: (() -> Void)? = nil,
+                corners: RectCorner = [.topLeft, .topRight, .bottomLeft, .bottomRight],
+                cornerRadius: CGFloat = 12,
+                
+                shadowColor: Color = .black.opacity(0.12),
+                shadowRadius: CGFloat = 8,
+                shadowOffX: CGFloat = 0,
+                shadowOffY: CGFloat = -1,
+                
+                animation: Animation = .default,
+                
+                horizontalAlignment: HorizontalAlignment = .center,
+                verticalAlignment: VerticalAlignment = .bottom,
+                
+                offsetX: CGFloat = 0,
+                offsetY: CGFloat = 0,
+                
+                onTapPopover: (() -> Void)? = nil) {
+        self.width = width
+        self.height = height
+        self.transition = transition
+        self.backgroundColor = backgroundColor
+        self.dismissOnTapOutside = dismissOnTapOutside
+        self.dismissBySwipeDown = dismissBySwipeDown
+        self.corners = corners
+        self.cornerRadius = cornerRadius
+        self.shadowColor = shadowColor
+        self.shadowRadius = shadowRadius
+        self.shadowOffX = shadowOffX
+        self.shadowOffY = shadowOffY
+        self.animation = animation
+        self.horizontalAlignment = horizontalAlignment
+        self.verticalAlignment = verticalAlignment
+        self.offsetX = offsetX
+        self.offsetY = offsetY
+        self.onTapPopover = onTapPopover
+    }
 }
