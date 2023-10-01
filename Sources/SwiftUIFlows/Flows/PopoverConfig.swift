@@ -15,7 +15,7 @@ public struct PopoverConfig {
     var backgroundColor: Color
     
     var dismissOnTapOutside: (() -> Void)?
-    var dismissBySwipeDown: (() -> Void)?
+    var dismissBySwipe: (() -> Void)?
     
     var corners: RectCorner
     var cornerRadius: CGFloat
@@ -39,6 +39,22 @@ public struct PopoverConfig {
     
     var onTapPopover: (() -> Void)?
     
+    
+    var borderColor: Color
+    var borderWidth: CGFloat
+    
+    var contentPadding: EdgeInsets
+    
+    var backgroundBlurRadius: CGFloat
+    
+    var isDraggable: Bool
+    
+    var dragRestrictions: DragRestrictions = [.all] // Assuming you'd define a DragRestrictions type
+    
+    var overlayColor: Color
+    
+    var interactiveDismissThreshold: CGFloat
+    
     public init(width: CGFloat,
                 height: CGFloat,
                 transition: AnyTransition = .move(edge: .bottom),
@@ -61,13 +77,23 @@ public struct PopoverConfig {
                 offsetX: CGFloat = 0,
                 offsetY: CGFloat = 0,
                 
-                onTapPopover: (() -> Void)? = nil) {
+                onTapPopover: (() -> Void)? = nil,
+                borderColor: Color = .clear,
+                borderWidth: CGFloat = 0,
+                contentPadding: EdgeInsets = .init(top: 8, leading: 8, bottom: 8, trailing: 8),
+                backgroundBlurRadius: CGFloat = 0,
+                isDraggable: Bool = true,
+                dragRestrictions: DragRestrictions = [.all],
+                
+                overlayColor: Color = .black.opacity(0.3),
+                interactiveDismissThreshold: CGFloat = 50
+    ) {
         self.width = width
         self.height = height
         self.transition = transition
         self.backgroundColor = backgroundColor
         self.dismissOnTapOutside = dismissOnTapOutside
-        self.dismissBySwipeDown = dismissBySwipeDown
+        self.dismissBySwipe = dismissBySwipeDown
         self.corners = corners
         self.cornerRadius = cornerRadius
         self.shadowColor = shadowColor
@@ -80,5 +106,15 @@ public struct PopoverConfig {
         self.offsetX = offsetX
         self.offsetY = offsetY
         self.onTapPopover = onTapPopover
+        self.borderColor = borderColor
+        self.borderWidth = borderWidth
+        self.contentPadding = contentPadding
+        self.backgroundBlurRadius = backgroundBlurRadius
+        self.isDraggable = isDraggable
+        self.dragRestrictions = dragRestrictions
+        self.overlayColor = overlayColor
+        self.interactiveDismissThreshold = interactiveDismissThreshold
     }
 }
+
+

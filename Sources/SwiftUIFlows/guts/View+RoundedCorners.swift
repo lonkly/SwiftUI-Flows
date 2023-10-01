@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public struct RectCorner: OptionSet {
+public struct RectCorner: OptionSet, Sendable {
     
     public let rawValue: Int
     
