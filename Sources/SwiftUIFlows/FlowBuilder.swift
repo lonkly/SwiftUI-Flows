@@ -12,8 +12,13 @@ import SwiftUI
     @Published var presentingSheets: [AnyView] = []
     @Published var presentingFullScreens: [AnyView] = []
     @Published var presentingPopups: [AnyView] = []
+    
     @Published var isPresented: Binding<Bool>
 
+    var currentSheetIndex: Int? {
+        presentingSheets.isEmpty ? nil : presentingSheets.count - 1
+    }
+        
     public init(isPresented: Binding<Bool>) {
         self.isPresented = isPresented
     }

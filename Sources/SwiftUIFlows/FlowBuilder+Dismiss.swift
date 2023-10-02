@@ -30,8 +30,7 @@ import SwiftUI
     
     /// Dismisses top-level modal sheet from your View.
     func dismissSheet() {
-          _ = self.presentingSheets.popLast()
-      }
-
+        _ = presentingSheets.popLast()
+    }
     
 }

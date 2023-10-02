@@ -8,24 +8,30 @@
 import Foundation
 import SwiftUI
 
-struct SheetFlowModifier: ViewModifier {
-    @ObservedObject var builder: FlowBuilder
-
-    func body(content: Content) -> some View {
-        content
-            .sheet(isPresented: Binding(
-                get: { builder.currentSheetView != nil },
-                set: { if !$0 { builder.dismissSheet() }}
-            )) {
-                if let presentingView = builder.currentSheetView {
-                    presentingView
-                }
-            }
-    }
+extension Int: Identifiable {
+    public var id: Int { self.hashValue }
 }
 
-extension FlowBuilder {
-    var currentSheetView: AnyView? {
-        return presentingSheets.last
+struct SheetFlowModifier: ViewModifier {
+    @ObservedObject var builder: FlowBuilder
+    
+    private var currentSheet: Binding<Int?> {
+        Binding(
+            get: {
+                return builder.currentSheetIndex
+            },
+            set: {
+                if $0 == nil {
+                    builder.dismissSheet()
+                }
+            }
+        )
+    }
+    
+    func body(content: Content) -> some View {
+        content
+            .sheet(item: currentSheet, onDismiss: {}) { index in
+                builder.presentingSheets[index]
+            }
     }
 }
