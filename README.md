@@ -1,5 +1,8 @@
 # SwiftUI Flows
 
+![Simulator Screen Recording - iPhone 15 - 2023-10-02 at 18 50 47](https://github.com/lonkly/SwiftUI-Flows/assets/1292110/7e7a4f42-f08a-4f71-96c5-099a975b4e73)
+
+
 ### A cross-Apple-platform library enabling the native SwiftUI for presenting multiple:
 - Full-screens
 - Sheet-styled modals
