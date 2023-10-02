@@ -14,28 +14,20 @@ import UIKit
 import AppKit
 #endif
 
-struct FullScreenFlow: ViewModifier {
-    @Binding var presentingView1: AnyView?
-    @Binding var presentingView2: AnyView?
-    @Binding var presentingView3: AnyView?
-    @Binding var presentingView4: AnyView?
-    @Binding var presentingView5: AnyView?
-    @Binding var presentingView6: AnyView?
-    @Binding var presentingView7: AnyView?
-    @Binding var presentingView8: AnyView?
-    @Binding var presentingView9: AnyView?
+struct FullScreenFlowModifier: ViewModifier {
+    @ObservedObject var builder: FlowBuilder
     
-    #if os(iOS)
+#if os(iOS)
     @State private var tabBar: UITabBar?
-    #endif
+#endif
     
     @Environment(\.fullScreensOnAppear) var onAppear
     @Environment(\.fullScreensOnDisappear) var onDisappear
-
+    
     func body(content: Content) -> some View {
         ZStack {
             content
-
+            
             if #available(iOS 16.0, *) {
                 overlay
                     .toolbar(.hidden)
@@ -63,19 +55,22 @@ struct FullScreenFlow: ViewModifier {
             
         }
     }
-
+    
     @ViewBuilder
     var overlay: some View {
-        let part1 = presentingView9 ?? presentingView8
-        let part2 = presentingView7 ?? presentingView6
-        let part3 = presentingView5 ?? presentingView4
-        let part4 = presentingView3 ?? presentingView2
-        if let presentingView = part1 ?? part2 ?? part3 ?? part4 ?? presentingView1 { // haha, swift compiler, deal with it
+        if let presentingView = builder.currentFullScreenView {
             presentingView
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .ignoresSafeArea(.all, edges: .bottom)
                 .zIndex(100)
-                
+            
         }
+    }
+}
+
+extension FlowBuilder {
+    var currentFullScreenView: AnyView? {
+        guard let idx = currentFullscreenIndex else { return nil }
+        return presentingFullScreens[idx]
     }
 }

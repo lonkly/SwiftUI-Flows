@@ -7,22 +7,14 @@
 
 import SwiftUI
 
-struct PopoverFlow: ViewModifier {
+struct PopoverFlowModifier: ViewModifier {
     
     let config: PopoverConfig
     
     @State private var animationValue = false
-    @State private var dragOffset = CGFloat.zero
+    @State private var dragOffset = CGSize.zero
     
-    @Binding var presentingView1: AnyView?
-    @Binding var presentingView2: AnyView?
-    @Binding var presentingView3: AnyView?
-    @Binding var presentingView4: AnyView?
-    @Binding var presentingView5: AnyView?
-    @Binding var presentingView6: AnyView?
-    @Binding var presentingView7: AnyView?
-    @Binding var presentingView8: AnyView?
-    @Binding var presentingView9: AnyView?
+    @ObservedObject var builder: FlowBuilder
     
     func body(content: Content) -> some View {
         ZStack(alignment: .bottom) {
@@ -33,9 +25,7 @@ struct PopoverFlow: ViewModifier {
     
     @ViewBuilder
     var presentedView: some View {
-        let part1 = presentingView9 ?? presentingView8 ?? presentingView7 ?? presentingView6 ?? presentingView5
-        let part2 = presentingView4 ?? presentingView3 ?? presentingView2 ?? presentingView1
-        if let presentingView = part1 ?? part2 { // haha, swift compiler, deal with it
+        if let presentingView = builder.currentPopoverView {
             ZStack(alignment: config.alignment) {
                 config.backgroundColor
                     .ignoresSafeArea()
@@ -49,34 +39,55 @@ struct PopoverFlow: ViewModifier {
                 
                 presentingView
                     .frame(width: config.width, height: config.height)
+                    .padding(config.contentPadding)
+                    .background(
+                        RoundedRectangle(cornerRadius: config.cornerRadius)
+                            .strokeBorder(config.borderColor, lineWidth: config.borderWidth)
+                    )
                     .shadow(color: config.shadowColor,
-                                    radius: config.shadowRadius,
-                                    x: config.shadowOffX,
-                                    y: config.shadowOffY)
-                    
+                            radius: config.shadowRadius,
+                            x: config.shadowOffX,
+                            y: config.shadowOffY)
+                
                     .roundedCorners(radius: config.cornerRadius, corners: config.corners)
                     .zIndex(6669) // always on top
                     .scaleEffect(animationValue ? 1 : 0)
                     .animation(config.animation, value: animationValue)
                     .transition(config.transition)
-                    .gesture(
-                        DragGesture(minimumDistance: 10 , coordinateSpace: .local)
-                            .onChanged { value in
-                                if config.dismissBySwipeDown != nil {
-                                    dragOffset += value.translation.height
+                    .gesture((config.isDraggable || (config.dismissBySwipe != nil)) ?
+                             DragGesture(minimumDistance: 10 , coordinateSpace: .local)
+                        .onChanged { value in
+                            if config.dismissBySwipe != nil || config.isDraggable {
+                                if config.dragRestrictions.contains(.up) && value.translation.height < 0 {
+                                    dragOffset.height += value.translation.height
+                                }
+                                if config.dragRestrictions.contains(.down) && value.translation.height > 0 {
+                                    dragOffset.height += value.translation.height
+                                }
+                                if config.dragRestrictions.contains(.left) && value.translation.width < 0 {
+                                    dragOffset.width += value.translation.width
+                                }
+                                if config.dragRestrictions.contains(.right) && value.translation.width > 0 {
+                                    dragOffset.width += value.translation.width
                                 }
                             }
-                            .onEnded { val in
-                                guard val.translation.height > 30 else {
-                                    return
-                                }
+                        }
+                        .onEnded { val in
+                            guard config.dismissBySwipe != nil || config.isDraggable else { return }
+                            
+                            let exceededHeightThreshold = abs(val.translation.height + val.predictedEndTranslation.height) > config.interactiveDismissThreshold
+                            let exceededWidthThreshold = abs(val.translation.width + val.predictedEndTranslation.width) > config.interactiveDismissThreshold
+                            
+                            let swipeVertical = (config.dragRestrictions.contains(.up) || config.dragRestrictions.contains(.down)) && exceededHeightThreshold
+                            let swipeHorizontal = (config.dragRestrictions.contains(.left) || config.dragRestrictions.contains(.right)) && exceededWidthThreshold
+                            
+                            if swipeVertical || swipeHorizontal {
                                 withAnimation {
-                                    withAnimation {
-                                        animationValue = false
-                                    }
-                                    config.dismissBySwipeDown?()
+                                    animationValue = false
                                 }
+                                config.dismissBySwipe?()
                             }
+                        } : nil
                     )
                     .onAppear {
                         withAnimation {
@@ -89,9 +100,16 @@ struct PopoverFlow: ViewModifier {
                             dragOffset = .zero
                         }
                     }
-                    .offset(x: config.offsetX, y: config.offsetY + dragOffset)
+                    .offset(x: config.offsetX + dragOffset.width, y: config.offsetY + dragOffset.height)
                     .simultaneousGesture(TapGesture(count: 1).onEnded { config.onTapPopover?() } )
             }
         }
+    }
+}
+
+extension FlowBuilder {
+    var currentPopoverView: AnyView? {
+        guard let idx = currentPopoverIndex else { return nil }
+        return presentingPopups[idx]
     }
 }
