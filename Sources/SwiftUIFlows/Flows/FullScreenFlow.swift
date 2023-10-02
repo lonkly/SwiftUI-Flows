@@ -73,7 +73,7 @@ struct FullScreenFlow: ViewModifier {
         if let presentingView = part1 ?? part2 ?? part3 ?? part4 ?? presentingView1 { // haha, swift compiler, deal with it
             presentingView
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .ignoresSafeArea(.all, edges: .bottom)
+                //.ignoresSafeArea(.all, edges: .bottom)
                 .zIndex(100)
                 
         }
