@@ -70,6 +70,7 @@ struct FullScreenFlowModifier: ViewModifier {
 
 extension FlowBuilder {
     var currentFullScreenView: AnyView? {
-        return presentingFullScreens.last
+        guard let idx = currentFullscreenIndex else { return nil }
+        return presentingFullScreens[idx]
     }
 }

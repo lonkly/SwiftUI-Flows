@@ -109,6 +109,7 @@ struct PopoverFlowModifier: ViewModifier {
 
 extension FlowBuilder {
     var currentPopoverView: AnyView? {
-        return presentingPopups.last
+        guard let idx = currentPopoverIndex else { return nil }
+        return presentingPopups[idx]
     }
 }
