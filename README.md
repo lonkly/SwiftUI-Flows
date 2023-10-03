@@ -4,7 +4,6 @@
 ![Simulator Screen Recording - iPhone 14 - 2023-10-02 at 21 46 04](https://github.com/lonkly/SwiftUI-Flows/assets/1292110/52e8b6de-edb0-4c9d-b00b-258a9ad946ea)
 
 
-How about this more polished description:
 🚀 SwiftUIFlows: Ultimate Navigation for Apple Ecosystem 🍎
 
 Seamlessly present modal screens, popups, and more in SwiftUI, across iOS and Mac!
