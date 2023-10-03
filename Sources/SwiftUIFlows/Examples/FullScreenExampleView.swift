@@ -17,7 +17,9 @@ struct FullscreenExampleView: View {
                 HStack {
                     Spacer()
                     Button {
-                        flow.dismissFullScreen()
+                        withAnimation {
+                            flow.dismissFullScreen()
+                        }
                     } label: {
                         Text("Dismiss")
                             .foregroundColor(Color.black)

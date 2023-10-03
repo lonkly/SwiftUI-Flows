@@ -58,10 +58,10 @@ struct ContentView: View {
         }
         
         .onAppear {
-//            Task {
-//                try? await Task.sleep(nanoseconds: 3_000_000_000)
-//                await presentAll()
-//            }
+            Task {
+              //  try? await Task.sleep(nanoseconds: 3_000_000_000)
+                await presentAll()
+            }
         }
         
         // This line is required for flow to present native iOS sheets
