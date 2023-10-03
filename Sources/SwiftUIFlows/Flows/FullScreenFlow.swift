@@ -40,6 +40,7 @@ struct FullScreenFlow: ViewModifier {
                 Color.black.opacity(0.1)
                     .transition(.opacity)
                     .ignoresSafeArea(.all, edges: .bottom)
+                    .allowsHitTesting(false)
                 
                 overlay
                     .toolbar(.hidden)
