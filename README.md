@@ -1,30 +1,33 @@
 # SwiftUI Flows
 
-![Simulator Screen Recording - iPhone 15 - 2023-10-02 at 18 50 47](https://github.com/lonkly/SwiftUI-Flows/assets/1292110/7e7a4f42-f08a-4f71-96c5-099a975b4e73)
+
+![Simulator Screen Recording - iPhone 14 - 2023-10-02 at 21 46 04](https://github.com/lonkly/SwiftUI-Flows/assets/1292110/52e8b6de-edb0-4c9d-b00b-258a9ad946ea)
 
 
-### A cross-Apple-platform library enabling the native SwiftUI for presenting multiple:
-- Full-screens
-- Sheet-styled modals
-- Сustom-sized models
-- Popovers
+How about this more polished description:
+🚀 SwiftUIFlows: Ultimate Navigation for Apple Ecosystem 🍎
 
+Seamlessly present modal screens, popups, and more in SwiftUI, across iOS and Mac!
+📱 What Can SwiftUIFlows Do?
 
-## Why SwiftUIFlows?
-- Extract navigation from the Views
-- Do it declaratively, no need to introduce tedious flags `@State private var isPresentingMyScreen = false` anymore
-- Yes, finally you can show up to 9 modals in the view and present/dismiss them at any time
-- Writing Flows is so simple they will actually take considerably less time to implement at scale because you don't need to write callbacks and dismissals yourself
-- Customizable popups
+    Full-screen Displays: Dive into immersive content.
+    Sheet-styled Modals: Classic, yet elegant.
+    Custom-sized Modals: Your size, your rules.
+    Popovers: The cherry on top for contextual info.
 
+🌟 Why Choose SwiftUIFlows?
 
-## Features:
-- Structured concurrency
-- Lightweight, no dependencies, made with KISS in mind
-- Works on Mac/iOS
-- Native Fullscreen based on ZStack (much better than out-of-the-box ones)
-- Native Popups based on ZStack
-- Endless possibilities for customization
+    Declarative & Clean: Say goodbye to scattered navigation logic and constant flag checking, like @State private var isPresentingMyScreen = false.
+    Streamlined Flows: Easy-to-write navigation flows that save you time and reduce boilerplate. No more manual callbacks and dismissals.
+    Multiple Modals: Show any number of modals in a view, and control their presentation and dismissal with ease.
+    Custom Popups: Design and present popups as unique as your app.
+
+💡 Features At A Glance:
+
+    Light & Swift: Zero dependencies. Built with the KISS (Keep It Simple, Stupid) principle.
+    Cross-Platform: Designed for both iOS and Mac.
+    Supercharged Fullscreen & Popups: Uses ZStack for native, enhanced presentations.
+    Limitless Customization: Style it, modify it, make it yours.
 
 
 ## Simple FlowBuilder Example:
@@ -45,10 +48,10 @@
 }
 ```
 
+## [Example Project](https://github.com/lonkly/SwiftUIFlows-Examples)
 ## Usage Example:
 
 ```
-
      flow.presentExample1() // popup
      flow.presentExample2() // full-screen
      flow.presentExample3() // another popup
@@ -80,12 +83,8 @@ import SwiftUIFlows
 }
 ```
 
+## Projects already using SwiftUI-Flows:
 
-### TODO:
+[Stakes](https://apps.apple.com/us/app/stakes-predict-sports/id1564167571?shortlink=website&c=Website%20Button&pid=Website&af_channel=Website%20Button&source_caller=ui)
 
-- Turn on/off animations
-- Test thoroughly
-
-Example Project:
-(currently developing a full showcase)
-https://github.com/lonkly/SwiftUI-Flows-Examples
+### Contributions and feature requests are welcome!
