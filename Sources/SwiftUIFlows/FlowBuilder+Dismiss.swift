@@ -11,10 +11,12 @@ import SwiftUI
 @MainActor public extension FlowBuilder {
     
     @MainActor private func dismissFromTop(of presentations: inout [AnyView]) {
-        if !presentations.isEmpty {
-            presentations.removeLast()
-        } else {
-            isPresented.wrappedValue = false
+        withAnimation {
+            if !presentations.isEmpty {
+                presentations.removeLast()
+            } else {
+                isPresented.wrappedValue = false
+            }
         }
     }
     
