@@ -37,16 +37,12 @@ struct FullScreenFlow: ViewModifier {
             content
 
             if #available(iOS 16.0, *) {
-                Color.black.opacity(0.1)
-                    .transition(.opacity)
-                    .ignoresSafeArea(.all, edges: .bottom)
-                    .allowsHitTesting(false)
                 
                 overlay
                     .toolbar(.hidden)
                     .onAppear { onAppear() }
                     .onDisappear { onDisappear() }
-                    .transition(.move(edge: .bottom))
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
             } else {
                 overlay
 #if os(iOS)
