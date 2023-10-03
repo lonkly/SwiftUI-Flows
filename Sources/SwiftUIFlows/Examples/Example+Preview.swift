@@ -14,11 +14,11 @@ struct ContentView: View {
     
     @StateObject var anotherFlow = ExampleFlow(isPresented: .constant(true))
     
-    func presentAll() async {
+    func presentAll()  {
         
-        await flow.presentExample1()
-        await flow.presentExample2()
-        await anotherFlow.presentExample3()
+         flow.presentExample1()
+         flow.presentExample2()
+         anotherFlow.presentExample3()
     }
     
     var body: some View {
@@ -41,9 +41,9 @@ struct ContentView: View {
             Spacer()
             
             Button(action: {
-                Task {
-                    await presentAll()
-                }
+                
+                     presentAll()
+                
             }) {
                 Text("Show Everything")
                     .font(.title3)
@@ -59,8 +59,8 @@ struct ContentView: View {
         
         .onAppear {
 //            Task {
-//                try? await Task.sleep(nanoseconds: 3_000_000_000)
-//                await presentAll()
+//                try?  Task.sleep(nanoseconds: 3_000_000_000)
+//                 presentAll()
 //            }
         }
         
@@ -100,23 +100,23 @@ struct ContentView: View {
 }
 
 @MainActor open class ExampleFlow: FlowBuilder {
-    func presentExample1() async {
-        await presentPopup(
+    func presentExample1()  {
+         presentPopup(
             PopupExampleView(showDismissButton: true)
                 .environmentObject(self)
         )
     }
     
     /// only thing special about these methods is how you actually want to present you view - via popup, fullscreen or a modal sheet.
-    func presentExample2() async {
-        await presentFullScreen(
+    func presentExample2()  {
+         presentFullScreen(
             FullscreenExampleView(showDismissButton: true)
                 .environmentObject(self)
         )
     }
     
-    func presentExample3() async {
-        await presentPopup(
+    func presentExample3()  {
+         presentPopup(
             PopupExample2View(showDismissButton: true)
                 .environmentObject(self)
         )

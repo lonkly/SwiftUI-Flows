@@ -57,7 +57,7 @@ public struct PopoverConfig {
     
     public init(width: CGFloat,
                 height: CGFloat,
-                transition: AnyTransition = .move(edge: .bottom),
+                transition: AnyTransition = .move(edge: .bottom).combined(with: .opacity),
                 backgroundColor: Color = .black.opacity(0.5),
                 dismissOnTapOutside: (() -> Void)? = nil,
                 dismissBySwipeDown: (() -> Void)? = nil,

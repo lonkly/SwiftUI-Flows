@@ -30,7 +30,9 @@ struct PopupExampleView: View {
                 HStack {
                     Spacer()
                     Button {
-                        flow.dismissPopup()
+                        withAnimation {
+                            flow.dismissPopup()
+                        }
                     } label: {
                         Text("Dismiss")
                             .tint(.black)

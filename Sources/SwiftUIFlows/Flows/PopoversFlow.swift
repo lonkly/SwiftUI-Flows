@@ -29,13 +29,15 @@ struct PopoverFlowModifier: ViewModifier {
             ZStack(alignment: config.alignment) {
                 config.backgroundColor
                     .ignoresSafeArea()
-                    .zIndex(1)
+                    .zIndex(6668)
                     .onTapGesture {
                         withAnimation {
                             animationValue = false
                         }
                         config.dismissOnTapOutside?()
                     }
+                    .transition(config.transition)
+                    .animation(config.animation, value: animationValue)
                 
                 presentingView
                     .frame(width: config.width, height: config.height)
