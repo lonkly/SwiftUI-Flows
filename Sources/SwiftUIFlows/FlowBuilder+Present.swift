@@ -12,7 +12,7 @@ import SwiftUI
 public extension FlowBuilder {
     
     /// Present as a native iOS sheet with animation
-    @MainActor func presentSheet<V: View>(_ view: V) async {
+    func presentSheet<V: View>(_ view: V) {
         if state.presentingSheet1 == nil { state.presentingSheet1 = AnyView(view)
         } else if state.presentingSheet2 == nil { state.presentingSheet2 = AnyView(view)
         } else if state.presentingSheet3 == nil { state.presentingSheet3 = AnyView(view)
@@ -28,7 +28,7 @@ public extension FlowBuilder {
     }
     
     /// Present as a full-screen
-    @MainActor func presentFullScreen<V: View>(_ view: V) async {
+    func presentFullScreen<V: View>(_ view: V) {
         if state.presentingFullScreen1 == nil { state.presentingFullScreen1 = AnyView(view)
         } else if state.presentingFullScreen2 == nil { state.presentingFullScreen2 = AnyView(view)
         } else if state.presentingFullScreen3 == nil { state.presentingFullScreen3 = AnyView(view)
@@ -44,7 +44,7 @@ public extension FlowBuilder {
     }
     
     /// Present as a popup
-    @MainActor func presentPopup<V: View>(_ view: V) async {
+    func presentPopup<V: View>(_ view: V) {
         if state.presentingPopup1 == nil { state.presentingPopup1 = AnyView(view)
         } else if state.presentingPopup2 == nil { state.presentingPopup2 = AnyView(view)
         } else if state.presentingPopup3 == nil { state.presentingPopup3 = AnyView(view)

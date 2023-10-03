@@ -28,16 +28,16 @@
 
 ```
 @MainActor class ExampleFlow: FlowBuilder {
-    func presentExample1() async {
-        await presentPopup(Example1View(showDismiss: true, flow: self))
+    func presentExample1() {
+        presentPopup(Example1View(showDismiss: true, flow: self))
     }
 
-    func presentExample2() async {
-        await presentFullScreen(Example2View(showDismiss: true, flow: self))
+    func presentExample2() {
+        presentFullScreen(Example2View(showDismiss: true, flow: self))
     }
 
-    func presentExample3() async {
-        await presentPopup(Example3View(showDismiss: true, flow: self))
+    func presentExample3() {
+        presentPopup(Example3View(showDismiss: true, flow: self))
     }
 }
 ```
@@ -45,36 +45,31 @@
 ## Usage Example:
 
 ```
-Task {
-    try? await Task.sleep(for: .seconds(1))
-    await flow.presentExample1() // popup
-    await flow.presentExample2() // full-screen
-    await flow.presentExample3() // another popup
-}
+
+    flow.presentExample1() // popup
+    flow.presentExample2() // full-screen
+    flow.presentExample3() // another popup
 ```
 
 ## More Avdanced FlowBuilder Example:
 ```
 import SwiftUIFlows
 
-@MainActor class RootFlow: FlowBuilder {
+class RootFlow: FlowBuilder {
     
-    func showVerified(viewModel: AuthVM) async {
-        await presentFullScreen(
+    func showVerified(viewModel: AuthVM) {
+        presentFullScreen(
             VerifiedView(viewModel: viewModel, completion: { [weak self] in
                 self?.dismissFullScreen()
             })
         )
     }
     
-    func showAnythingYouWant(view: AnyView) async {
-        await presentFullScreen(
+    func showAnythingYouWant(view: AnyView) {
+        presentFullScreen(
             view
                 .onAppear {
-                    Task {
-                        try? await Task.sleep(for: .seconds(2))
                         self.dismissFullScreen()
-                    }
                 }
         )
     }
